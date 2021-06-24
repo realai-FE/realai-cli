@@ -5,20 +5,28 @@ import chalk from 'chalk'
 import symbol from 'log-symbols'
 
 import { downloadLocal } from './utils/get'
-import { ALLOW_TEMPLATES } from './utils/constants'
+import { ALLOW_TEMPLATES, TEMPLATE_CHOICES } from './utils/constants'
+const tip = (msg) => chalk.blue(msg)
+
+const customTemplateSelect = [
+  {
+    type: 'checkbox',
+    name: 'inputType',
+    message: tip('请选择模板'),
+    choices: TEMPLATE_CHOICES,
+    validate: (answer) => {
+      if (answer.length === 1) {
+        return true
+      } else {
+        return warning('只能选择一种输入方式')
+      }
+    },
+  },
+]
+const SelectTemplateFn = () => inquirer.prompt(customTemplateSelect)
 
 let init = async (templateName, projectName) => {
-  console.log('templateName', templateName)
-  console.log('projectName', projectName)
-  if (!ALLOW_TEMPLATES.includes(templateName)) {
-    const str = ALLOW_TEMPLATES.join(',')
-    console.log(
-      chalk.red(chalk.bold('Error:')),
-      chalk.red(`init参数不为空时应取值 ${str}之一`)
-    )
-    return
-  }
-  //项目不存在
+  // 项目不存在
   if (!fs.existsSync(projectName)) {
     //命令行交互
     inquirer
@@ -37,6 +45,10 @@ let init = async (templateName, projectName) => {
         },
       ])
       .then(async (answer) => {
+        if (!ALLOW_TEMPLATES.includes(templateName)) {
+          let { inputType } = await SelectTemplateFn()
+          templateName = inputType
+        }
         //下载模板 选择模板
         //通过配置文件，获取模板信息
         let loading = ora('downloading template ...')

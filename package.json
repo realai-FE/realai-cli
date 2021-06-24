@@ -1,6 +1,6 @@
 {
-  "name": "@realai/realai-cli",
-  "version": "0.1.0",
+  "name": "realai-cli",
+  "version": "0.1.2",
   "description": "A front-end cli",
   "main": "index.js",
   "bin": {
