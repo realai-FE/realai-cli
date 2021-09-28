@@ -53,4 +53,7 @@ realai init
 * 基于ts的umi模版
     `realai init umi-ts`
 
+* 基于ts的Pro管理系统
+  `realai init admin-pro`
+
 ***建议如果是后台管理系统，优先使用umi-ts***

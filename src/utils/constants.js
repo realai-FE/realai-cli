@@ -7,6 +7,11 @@ const HOME = process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME']
 export const RC = `${HOME}/.relairc`
 
 export const REGISTRYS_MAP = {
+  'admin-pro': {
+    registry: 'realai-FE',
+    template: 'admin-template',
+    branch: 'main',
+  },
   'umi-ts': {
     registry: 'realai-FE',
     template: 'umi-ts-template',
